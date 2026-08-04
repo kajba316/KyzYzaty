@@ -2,7 +2,7 @@
    ТОЙ ЧАКЫРУУ — script.js
    Бардык маалыматты (аты-жөнү, күн, дарек ж.б.) ушул жерден
    өзгөртсөңүз болот — CONFIG объектисин караңыз.
-   ============================================================ */
+============================================================ */
 
 const CONFIG = {
   eventType: "Кыз Узатуу",
@@ -20,7 +20,6 @@ const CONFIG = {
   greetingBody: "Кыз узатуу тоюна арналган ак дасторконубуздун кадырлуу конагы болууга чакырабыз!",
   blessingText: "Тойымыздун кадырлуу конагы болуңуздар!",
 
-  // ISO formatted datetime — countdown, calendar highlight, hero date ушундан эсептелет
   eventDateISO: "2026-09-12T18:00:00",
   eventDateShort: "12.09.2026",
   eventDateDisplay: "2026-жылы сентябрь айынын 12и",
@@ -29,31 +28,12 @@ const CONFIG = {
   venueCity: "Бишкек шаары",
   venueStreet: "Манас проспектиси, 40",
   venueHall: "\u201CАк Үй\u201D банкет залы",
-  mapQuery: "Манас проспектиси 40, Бишкек",
 
-  phoneDisplay: "+996 700 00 00 00",
-  phoneWhatsapp: "996700000000",
-  instagram: "@kyz.uzatuu.invite",
-
-  photos: {
-    hero: "https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg?auto=compress&cs=tinysrgb&h=900&w=700",
-    mid:  "https://images.pexels.com/photos/33425290/pexels-photo-33425290.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-    bottom: "https://images.pexels.com/photos/27697807/pexels-photo-27697807.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-    gallery: [
-      "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&h=500&w=500",
-      "https://images.pexels.com/photos/265722/pexels-photo-265722.jpeg?auto=compress&cs=tinysrgb&h=500&w=500",
-      "https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&h=500&w=500",
-      "https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg?auto=compress&cs=tinysrgb&h=500&w=500",
-      "https://images.pexels.com/photos/265920/pexels-photo-265920.jpeg?auto=compress&cs=tinysrgb&h=500&w=500",
-      "https://images.pexels.com/photos/1589216/pexels-photo-1589216.jpeg?auto=compress&cs=tinysrgb&h=500&w=500"
-    ]
-  },
-
-  monthNamesKY: ["ЖАНУАР","ФЕВРАЛЬ","МАРТ","АПРЕЛЬ","МАЙ","ИЮНЬ","ИЮЛЬ","АВГУСТ","СЕНТЯБРЬ","ОКТЯБРЬ","НОЯБРЬ","ДЕКАБРЬ"],
-  dowNamesKY: ["Жк","Дш","Шш","Шр","Бш","Жм","Иш"] // Sun..Sat short (Кыргызча)
+  dowNamesKY: ["Жк","Дш","Шш","Шр","Бш","Жм","Иш"] // Sun..Sat (Кыргызча)
 };
 
 function qs(sel){ return document.querySelector(sel); }
+function qsa(sel){ return Array.from(document.querySelectorAll(sel)); }
 
 /* ------------------------------------------------------------
    1. Populate DOM from CONFIG
@@ -63,7 +43,6 @@ function populateContent(){
 
   qs("#sealMono").textContent = CONFIG.monogram;
 
-  qs("#heroImg").src = CONFIG.photos.hero;
   qs("#heroNames").innerHTML = `${CONFIG.groomName} &amp; ${CONFIG.brideName}`;
   qs("#heroType").textContent = CONFIG.eventType;
   qs("#heroDate").textContent = CONFIG.eventDateShort;
@@ -73,48 +52,19 @@ function populateContent(){
   qs("#greetingBody").textContent = CONFIG.greetingBody;
   qs("#blessingText").innerHTML = CONFIG.blessingText.replace(/\n/g,"<br/>");
 
-  qs("#midImg").src = CONFIG.photos.mid;
-  qs("#bottomImg").src = CONFIG.photos.bottom;
-
   qs("#calendarSub").textContent = `${CONFIG.eventDateDisplay} · саат ${CONFIG.eventTimeDisplay}`;
 
   qs("#venueCity").textContent = CONFIG.venueCity;
   qs("#venueStreet").textContent = CONFIG.venueStreet;
   qs("#venueHall").textContent = CONFIG.venueHall;
   qs("#hostsNames").textContent = `${CONFIG.groomName} — ${CONFIG.brideName}`;
-
-  const mapQ = encodeURIComponent(CONFIG.mapQuery);
-  qs("#mapLink").href = `https://www.google.com/maps/search/?api=1&query=${mapQ}`;
-  qs("#mapFrame").src = `https://maps.google.com/maps?q=${mapQ}&z=15&output=embed`;
-
-  qs("#contactPhoneLink").textContent = CONFIG.phoneDisplay;
-  qs("#contactPhoneLink").href = `tel:${CONFIG.phoneDisplay.replace(/\s+/g,"")}`;
-  qs("#contactInstagram").textContent = CONFIG.instagram;
-  qs("#contactInstagram").href = `https://instagram.com/${CONFIG.instagram.replace("@","")}`;
-  qs("#waLink").href = `https://wa.me/${CONFIG.phoneWhatsapp}`;
-  qs("#contactPhoneIcon").href = `tel:${CONFIG.phoneDisplay.replace(/\s+/g,"")}`;
-
-  const rsvpMsg = encodeURIComponent(
-    `Ассалоому алейкум! Мен ${CONFIG.groomName} менен ${CONFIG.brideName} эжейдин "${CONFIG.eventType}" тоюна баруумду ырастагым келет.`
-  );
-  qs("#rsvpBtn").href = `https://wa.me/${CONFIG.phoneWhatsapp}?text=${rsvpMsg}`;
-
-  // gallery
-  const gal = qs("#galleryGrid");
-  gal.innerHTML = "";
-  CONFIG.photos.gallery.forEach((src,i)=>{
-    const div = document.createElement("div");
-    div.className = "gallery-item reveal";
-    div.innerHTML = `<img src="${src}" alt="Той сүрөтү ${i+1}" loading="lazy"/>`;
-    div.addEventListener("click", ()=>openLightbox(src));
-    gal.appendChild(div);
-  });
 }
 
 /* ------------------------------------------------------------
    2. Ambient falling petals
 ------------------------------------------------------------- */
 function spawnPetals(container, count){
+  if(!container) return;
   for(let i=0;i<count;i++){
     const p = document.createElement("div");
     p.className = "petal";
@@ -131,7 +81,7 @@ function spawnPetals(container, count){
 }
 
 /* ------------------------------------------------------------
-   3. Intro screen open interaction (tap emblem -> fade into card)
+   3. Intro screen open interaction
 ------------------------------------------------------------- */
 function initEnvelope(){
   const seal = qs("#waxSeal");
@@ -139,15 +89,17 @@ function initEnvelope(){
   const envScreen = qs("#envelopeScreen");
   const mainInv = qs("#mainInvitation");
   const flash = qs("#lightBurst");
+  if(!seal || !envWrap || !envScreen || !mainInv) return;
 
   seal.addEventListener("click", ()=>{
     if(seal.classList.contains("cracked")) return;
     seal.classList.add("cracked");
-    tryPlayMusic();
+
+    try{ tryPlayMusic(); }catch(e){ /* ignore */ }
 
     setTimeout(()=>{
       envWrap.classList.add("opening");
-      flash.classList.add("flash");
+      if(flash) flash.classList.add("flash");
     }, 260);
 
     setTimeout(()=>{
@@ -170,6 +122,7 @@ function initEnvelope(){
 function initCountdown(){
   const target = new Date(CONFIG.eventDateISO).getTime();
   const els = { d: qs("#cdDays"), h: qs("#cdHours"), m: qs("#cdMin"), s: qs("#cdSec") };
+  if(!els.d || !els.h || !els.m || !els.s) return;
   function tick(){
     const now = Date.now();
     let diff = Math.max(0, target - now);
@@ -187,7 +140,7 @@ function initCountdown(){
 }
 
 /* ------------------------------------------------------------
-   5. Calendar grid (highlights event day, dotted ring like the video)
+   5. Calendar grid
 ------------------------------------------------------------- */
 function initCalendar(){
   const date = new Date(CONFIG.eventDateISO);
@@ -196,6 +149,7 @@ function initCalendar(){
   const eventDay = date.getDate();
 
   const grid = qs("#calendarGrid");
+  if(!grid) return;
   grid.innerHTML = "";
   CONFIG.dowNamesKY.forEach(d=>{
     const el = document.createElement("div");
@@ -221,27 +175,24 @@ function initCalendar(){
 }
 
 /* ------------------------------------------------------------
-   6. Gallery lightbox
+   6. Photo carousel — лента бегает сама по себе (чистый CSS,
+      animation: carousel-scroll). Тут только пауза по тапу,
+      чтобы на телефоне можно было спокойно рассмотреть фото.
 ------------------------------------------------------------- */
-function initLightbox(){
-  qs("#lightboxClose").addEventListener("click", closeLightbox);
-  qs("#lightboxOverlay").addEventListener("click", (e)=>{
-    if(e.target.id === "lightboxOverlay") closeLightbox();
-  });
-}
-function openLightbox(src){
-  qs("#lightboxImg").src = src;
-  qs("#lightboxOverlay").classList.add("open");
-}
-function closeLightbox(){
-  qs("#lightboxOverlay").classList.remove("open");
+function initPhotoCarousel(){
+  const viewport = qs(".photo-carousel-viewport");
+  if(!viewport) return;
+  viewport.addEventListener("touchstart", ()=>viewport.classList.add("paused"), { passive:true });
+  viewport.addEventListener("touchend", ()=>{
+    setTimeout(()=>viewport.classList.remove("paused"), 1200);
+  }, { passive:true });
 }
 
 /* ------------------------------------------------------------
-   7. Scroll reveal — ornaments & sections fade+rise into view
+   7. Scroll reveal
 ------------------------------------------------------------- */
 function initScrollReveal(){
-  const items = document.querySelectorAll(".reveal:not(.in)");
+  const items = qsa(".reveal:not(.in)");
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
       if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
@@ -252,14 +203,20 @@ function initScrollReveal(){
 
 /* ------------------------------------------------------------
    8. Background music toggle
-   Place your own royalty-free track at ./music/background.mp3
 ------------------------------------------------------------- */
 function tryPlayMusic(){
-  qs("#bgAudio").play().catch(()=>{ /* autoplay may be blocked until user gesture — button still works */ });
+  try{
+    const audio = qs("#bgAudio");
+    if(!audio) return;
+    const p = audio.play();
+    if(p && typeof p.catch === "function") p.catch(()=>{ /* autoplay blocked or no file yet — ignore */ });
+  }catch(e){ /* ignore */ }
 }
 function initMusicToggle(){
   const audio = qs("#bgAudio");
-  qs("#musicBtnFloat").addEventListener("click", ()=>{
+  const btn = qs("#musicBtnFloat");
+  if(!audio || !btn) return;
+  btn.addEventListener("click", ()=>{
     if(audio.paused){ audio.play().catch(()=>{}); } else { audio.pause(); }
   });
   audio.addEventListener("play", updateMusicIcon);
@@ -268,18 +225,26 @@ function initMusicToggle(){
   updateMusicIcon();
 }
 function updateMusicIcon(){
-  qs("#musicBtnFloat").classList.toggle("muted", qs("#bgAudio").paused);
+  const audio = qs("#bgAudio");
+  const btn = qs("#musicBtnFloat");
+  if(!audio || !btn) return;
+  btn.classList.toggle("muted", audio.paused);
 }
 
 /* ------------------------------------------------------------
    INIT
 ------------------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", ()=>{
-  populateContent();
-  spawnPetals(qs("#petalsLayer"), 16);
-  initEnvelope();
-  initCountdown();
-  initCalendar();
-  initLightbox();
-  initMusicToggle();
+  const steps = [
+    populateContent,
+    ()=>spawnPetals(qs("#petalsLayer"), 16),
+    initEnvelope,
+    initCalendar,
+    initCountdown,
+    initPhotoCarousel,
+    initMusicToggle
+  ];
+  steps.forEach(fn=>{
+    try{ fn(); }catch(e){ console.error("Init step failed:", fn.name, e); }
+  });
 });
