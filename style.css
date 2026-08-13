@@ -333,6 +333,10 @@ button {
 }
 
 .music-btn {
+	position: fixed;
+	top: 20px;
+	right: 10px;
+	z-index: 45;
 	width: 44px;
 	height: 44px;
 	border-radius: 50%;
@@ -356,12 +360,18 @@ button {
 	width: 18px;
 	height: 18px;
 }
-.music-btn--float {
+/* .music-btn--float {
 	position: fixed;
 	right: max(16px, env(safe-area-inset-right));
 	top: max(16px, env(safe-area-inset-top));
 	z-index: 45;
-}
+} */
+/* .music-btn--float {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 45;
+} */
 .music-btn.muted svg {
 	opacity: 0.45;
 }
@@ -661,7 +671,7 @@ button {
 .countdown-section {
 	padding: 6px clamp(12px, 5vw, 26px) 8px;
 	text-align: center;
-  padding-top: 50px;
+	padding-top: 50px;
 }
 .countdown-title {
 	margin: 0 0 14px;
@@ -828,72 +838,72 @@ button {
 
 /* ---- mauve blocks (venue / hosts) ---- */
 .mauve-block {
-    background: #8b4b54; /* красивый бордовый */
-    color: #fffaf4;
-    text-align: center;
+	background: #8b4b54; /* красивый бордовый */
+	color: #fffaf4;
+	text-align: center;
 
-    padding: 48px 20px;
-    margin: 0;
+	padding: 48px 20px;
+	margin: 0;
 
-    position: relative;
-    z-index: 2;
+	position: relative;
+	z-index: 2;
 
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    box-shadow: none;
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+	box-shadow: none;
 }
 
 .block-script {
-    font-family: var(--font-script);
-    font-size: clamp(1.6rem, 5vw, 2rem);
-    margin-bottom: 24px;
+	font-family: var(--font-script);
+	font-size: clamp(1.6rem, 5vw, 2rem);
+	margin-bottom: 24px;
 }
 
 .venue-photo {
-    width: 100%;
-    max-width: 420px;
-    border-radius: 20px;
-    display: block;
-    margin: 0 auto 24px;
-    margin-top: 30px;
+	width: 100%;
+	max-width: 420px;
+	border-radius: 20px;
+	display: block;
+	margin: 0 auto 24px;
+	margin-top: 30px;
 }
 
 .block-quote {
-    font-family: var(--font-script);
-    font-size: clamp(1.4rem, 4vw, 1.8rem);
-    margin: 10px 0;
+	font-family: var(--font-script);
+	font-size: clamp(1.4rem, 4vw, 1.8rem);
+	margin: 10px 0;
 }
 
 .block-caps {
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    opacity: .95;
-    margin: 4px 0;
+	font-size: 0.95rem;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	opacity: 0.95;
+	margin: 4px 0;
 }
 
 .map-wrapper {
-    margin-top: 30px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 12px 35px rgba(0,0,0,.2);
+	margin-top: 30px;
+	border-radius: 20px;
+	overflow: hidden;
+	box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
 }
 
 .map-wrapper iframe {
-    display: block;
-    width: 100%;
-    height: 320px;
-    border: 0;
+	display: block;
+	width: 100%;
+	height: 320px;
+	border: 0;
 }
 
 @media (max-width: 768px) {
-    .mauve-block {
-        padding: 40px 16px;
-    }
+	.mauve-block {
+		padding: 40px 16px;
+	}
 
-    .map-wrapper iframe {
-        height: 240px;
-    }
+	.map-wrapper iframe {
+		height: 240px;
+	}
 }
 
 /* ---- blessing ---- */
@@ -1060,8 +1070,8 @@ button {
 	height: 26px;
 }
 .music {
-    position: fixed;
-    z-index: 9999;
+	position: fixed;
+	z-index: 9999;
 }
 @media (max-width: 480px) {
 	.timeline-icon svg {
@@ -1247,7 +1257,7 @@ button {
 	.music-btn {
 		width: 56px;
 		height: 56px;
-    position: fixed;
+		position: fixed;
 	}
 	.telegram-link {
 		padding: 14px 30px;
