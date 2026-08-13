@@ -248,3 +248,4 @@ document.addEventListener("DOMContentLoaded", ()=>{
     try{ fn(); }catch(e){ console.error("Init step failed:", fn.name, e); }
   });
 });
+// тест
